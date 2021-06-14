@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container style="height: 800px; border: 1px solid #eee">
+    <el-container style="height: 100%; border: 1px solid #eee">
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
           <span style="text-align: center; font-size: 15px;">{{ cate }}</span>
@@ -14,21 +14,40 @@
           </el-dropdown>
         </el-header>
 
-        <el-main>
+        <el-main style="height: 100%">
           <div class="table-settings">
-            <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
-                      style="width: 300px" @keyup.enter.native="searchItem"></el-input>
-            <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
+            <el-row>
+              <el-col :span="12">
+                <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
+                          style="width: 300px" @keyup.enter.native="searchItem"></el-input>
+                <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
+              </el-col>
+              <el-col :span="12">
+                <div class="block">
+                  <span class="demonstration">日期选择</span>
+                  <el-date-picker
+                    v-model="date1"
+                    type="daterange"
+                    align="right"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    :picker-options="pickerOptions">
+                  </el-date-picker>
+                </div>
+              </el-col>
+            </el-row>
           </div>
-          <el-table v-loading="loading" :data="orders" max-height="600" height="600" border stripe style="width: 100%;"
+          <el-table v-loading="loading" :data="orders" max-height="100%" height="600" border stripe style="width: 100%;"
           >
             <el-table-column prop="orderNum" label="单据编号" width="120">
             </el-table-column>
@@ -90,6 +109,7 @@ export default {
     const input = ''
     const search = false
     const selectedvalue = ''
+    // const currentdate = new Date()
     const options = [{
       value: 'name',
       label: '按客户名称'
@@ -115,7 +135,36 @@ export default {
       pageIndex: 1,
       pageSize: 10,
       totalPage: 0,
-      loading: false
+      loading: false,
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+            console.log(picker)
+          }
+        }]
+      },
+      date1: ''
     }
   },
   computed: {},

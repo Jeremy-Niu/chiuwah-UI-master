@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container style="height: 800px; border: 1px solid #eee">
+    <el-container style="height:100%; border: 1px solid #eee">
       <el-aside width="250px" style="background-color: rgb(238, 241, 246)">
         <el-table ref="menuTable" highlight-current-row :data="listMenu" stripe style="width: 100%"
                   @row-dblclick="getDataList"
