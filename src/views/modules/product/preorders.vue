@@ -19,7 +19,7 @@
             <el-row>
               <el-col :span="12">
                 <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
-                          style="width: 300px" @keyup.enter.native="searchItem"></el-input>
+                          style="width: 280px" @keyup.enter.native="searchItem"></el-input>
                 <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
                   <el-option
                     v-for="item in options"
@@ -38,11 +38,13 @@
                     type="daterange"
                     align="right"
                     unlink-panels
+                    value-format="yyyy-MM-dd"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     :picker-options="pickerOptions">
                   </el-date-picker>
+                  <el-button type="primary" icon="el-icon-search" @click="dateconfirm">确认日期</el-button>
                 </div>
               </el-col>
             </el-row>
@@ -160,7 +162,6 @@ export default {
             const start = new Date()
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
             picker.$emit('pick', [start, end])
-            console.log(picker)
           }
         }]
       },
@@ -178,12 +179,14 @@ export default {
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
-          'limit': this.pageSize
+          'limit': this.pageSize,
+          'date1': this.date1[0],
+          'date2': this.date1[1]
         })
       }).then(({data}) => {
         this.loading = false
         if (data && data.code === 0) {
-          this.items = data.page.list
+          this.orders = data.page.list
           this.totalPage = data.page.totalCount
         } else {
           this.orders = []
@@ -191,8 +194,14 @@ export default {
         }
       })
     },
+    dateconfirm () {
+      let string = '/preorder/general/info/date'
+      console.log(this.date1)
+      this.requestData(string)
+      console.log(this.orders)
+    },
     searchItem () {
-      if (this.input != null) {
+      if (this.input) {
         console.log(this.selectedvalue)
         if (this.selectedvalue === 'customerNum') {
           let string = '/product/customer/customerNum/' + this.input
@@ -251,6 +260,7 @@ export default {
   beforeMount () {
   },
   mounted () {
+    this.getDataList()
   },
   beforeUpdate () {
   },

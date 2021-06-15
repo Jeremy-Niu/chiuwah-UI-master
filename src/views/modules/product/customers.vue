@@ -28,9 +28,8 @@
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
           </div>
-          <el-table v-loading="loading" :data="customers" max-height="600" height="600" border stripe style="width: 100%;"
-          >
-            <el-table-column prop="customerName" label="客户" width="%20">
+          <el-table v-loading="loading" :data="customers" max-height="600" height="600" border stripe style="width: 100%;">
+            <el-table-column prop="customerName" label="客户" width="380">
             </el-table-column>
             <el-table-column prop="customerNum" label="客户编号">
             </el-table-column>
