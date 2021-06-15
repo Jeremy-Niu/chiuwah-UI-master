@@ -2,17 +2,17 @@
   <div>
     <el-container style="height: 800px; border: 1px solid #eee">
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
-          <span style="text-align: center; font-size: 15px;">{{ cate }}</span>
-          <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-header>
+<!--        <el-header style="text-align: right; font-size: 12px">-->
+<!--          <span style="text-align: center; font-size: 15px;">{{ cate }}</span>-->
+<!--          <el-dropdown>-->
+<!--            <i class="el-icon-setting" style="margin-right: 15px"></i>-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <el-dropdown-item>查看</el-dropdown-item>-->
+<!--              <el-dropdown-item>新增</el-dropdown-item>-->
+<!--              <el-dropdown-item>删除</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
+<!--        </el-header>-->
 
         <el-main>
           <div class="table-settings">
@@ -34,16 +34,18 @@
             <el-table-column prop="customerNum" label="客户编号">
             </el-table-column>
           </el-table>
+          <el-pagination
+            @size-change="sizeChangeHandle"
+            @current-change="currentChangeHandle"
+            :current-page="pageIndex"
+            :page-sizes="[10, 20, 50, 100]"
+            :page-size="pageSize"
+            :total="totalPage"
+            layout="total, sizes, prev, pager, next, jumper"
+          >
+          </el-pagination>
         </el-main>
-        <el-pagination
-          @size-change="sizeChangeHandle"
-          @current-change="currentChangeHandle"
-          :current-page="pageIndex"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="pageSize"
-          :total="totalPage"
-          layout="total, sizes, prev, pager, next, jumper">
-        </el-pagination>
+
       </el-container>
     </el-container>
   </div>

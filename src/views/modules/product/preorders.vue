@@ -2,17 +2,17 @@
   <div>
     <el-container style="height: 100%; border: 1px solid #eee">
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
-          <span style="text-align: center; font-size: 15px;">{{ cate }}</span>
-          <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-header>
+<!--        <el-header style="text-align: right; font-size: 12px">-->
+<!--          <span style="text-align: center; font-size: 15px;">{{ cate }}</span>-->
+<!--          <el-dropdown>-->
+<!--            <i class="el-icon-setting" style="margin-right: 15px"></i>-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <el-dropdown-item>查看</el-dropdown-item>-->
+<!--              <el-dropdown-item>新增</el-dropdown-item>-->
+<!--              <el-dropdown-item>删除</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
+<!--        </el-header>-->
 
         <el-main style="height: 100%">
           <div class="table-settings">
@@ -49,7 +49,7 @@
               </el-col>
             </el-row>
           </div>
-          <el-table v-loading="loading" :data="orders" max-height="100%" height="600" border stripe style="width: 100%;"
+          <el-table v-loading="loading" :data="orders" height="800px" border stripe style="width: 100%;"
           >
             <el-table-column prop="orderNum" label="单据编号" width="120">
             </el-table-column>
@@ -83,18 +83,17 @@
             </el-table-column>
             <el-table-column prop="jobNum" label="工号">
             </el-table-column>
-
           </el-table>
+          <el-pagination
+            @size-change="sizeChangeHandle"
+            @current-change="currentChangeHandle"
+            :current-page="pageIndex"
+            :page-sizes="[10, 20, 50, 100]"
+            :page-size="pageSize"
+            :total="totalPage"
+            layout="total, sizes, prev, pager, next, jumper">
+          </el-pagination>
         </el-main>
-        <el-pagination
-          @size-change="sizeChangeHandle"
-          @current-change="currentChangeHandle"
-          :current-page="pageIndex"
-          :page-sizes="[10, 20, 50, 100]"
-          :page-size="pageSize"
-          :total="totalPage"
-          layout="total, sizes, prev, pager, next, jumper">
-        </el-pagination>
       </el-container>
     </el-container>
   </div>
