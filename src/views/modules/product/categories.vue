@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container style="height:100%; border: 1px solid #eee">
+    <el-container style="height:800px; border: 1px solid #eee">
       <el-aside width="250px" style="background-color: rgb(238, 241, 246)">
         <el-table ref="menuTable" highlight-current-row :data="listMenu" stripe style="width: 100%"
                   @row-dblclick="getDataList"
@@ -20,7 +20,6 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-header>
-
         <el-main>
           <div class="table-settings">
             <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
@@ -35,7 +34,7 @@
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
           </div>
-          <el-table v-loading="loading" :data="items" max-height="600" height="600" border stripe style="width: 100%;"
+          <el-table v-loading="loading" :data="items" max-height="700" height="600" border stripe style="width: 100%;"
           >
             <el-table-column prop="itemName" label="名称">
             </el-table-column>

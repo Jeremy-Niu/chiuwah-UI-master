@@ -1,107 +1,109 @@
 <template>
   <div>
     <el-container style="height: 100%; border: 1px solid #eee">
-      <el-container>
-<!--        <el-header style="text-align: right; font-size: 12px">-->
-<!--          <span style="text-align: center; font-size: 15px;">{{ cate }}</span>-->
-<!--          <el-dropdown>-->
-<!--            <i class="el-icon-setting" style="margin-right: 15px"></i>-->
-<!--            <el-dropdown-menu slot="dropdown">-->
-<!--              <el-dropdown-item>查看</el-dropdown-item>-->
-<!--              <el-dropdown-item>新增</el-dropdown-item>-->
-<!--              <el-dropdown-item>删除</el-dropdown-item>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
-<!--        </el-header>-->
+      <!--        <el-header style="text-align: right; font-size: 12px">-->
+      <!--          <span style="text-align: center; font-size: 15px;">{{ cate }}</span>-->
+      <!--          <el-dropdown>-->
+      <!--            <i class="el-icon-setting" style="margin-right: 15px"></i>-->
+      <!--            <el-dropdown-menu slot="dropdown">-->
+      <!--              <el-dropdown-item>查看</el-dropdown-item>-->
+      <!--              <el-dropdown-item>新增</el-dropdown-item>-->
+      <!--              <el-dropdown-item>删除</el-dropdown-item>-->
+      <!--            </el-dropdown-menu>-->
+      <!--          </el-dropdown>-->
+      <!--        </el-header>-->
 
-        <el-main style="height: 100%">
-          <div class="table-settings">
-            <el-row>
-              <el-col :span="12">
-                <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
-                          style="width: 280px" @keyup.enter.native="searchItem"></el-input>
-                <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-                <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
-              </el-col>
-              <el-col :span="12">
-                <div class="block">
-                  <span class="demonstration">日期选择</span>
-                  <el-date-picker
-                    v-model="date1"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    value-format="yyyy-MM-dd"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :picker-options="pickerOptions">
-                  </el-date-picker>
-                  <el-button type="primary" icon="el-icon-search" @click="dateconfirm">确认日期</el-button>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-          <el-table v-loading="loading" :data="orders" height="800px" border stripe style="width: 100%;"
-          >
-            <el-table-column prop="orderNum" label="单据编号" width="120">
-            </el-table-column>
-            <el-table-column prop="typeBusiness" label="业务类型">
-            </el-table-column>
-            <el-table-column prop="customerName" label="客户">
-            </el-table-column>
-            <el-table-column prop="customerNum" label="客户编号">
-            </el-table-column>
-            <el-table-column prop="date" label=日期>
-            </el-table-column>
-            <el-table-column prop="postCode" label="邮编">
-            </el-table-column>
-            <el-table-column prop="source" label="source">
-            </el-table-column>
-            <el-table-column prop="stateTime" label="state-time">
-            </el-table-column>
-            <el-table-column prop="totalNum" label="合计数量">
-            </el-table-column>
-            <el-table-column prop="totalAmount" label="合计金额">
-            </el-table-column>
-            <el-table-column prop="totalTaxAmount" label="合计税额">
-            </el-table-column>
-            <el-table-column prop="totalTaxBeforeAmount" label="合计税前金额">
-            </el-table-column>
-            <el-table-column prop="totalWeight" label="合计重量">
-            </el-table-column>
-            <el-table-column prop="receivables" label="应收款">
-            </el-table-column>
-            <el-table-column prop="totalAmountWithTax" label="合计有税商品税前金额">
-            </el-table-column>
-            <el-table-column prop="jobNum" label="工号">
-            </el-table-column>
-          </el-table>
-          <el-pagination
-            @size-change="sizeChangeHandle"
-            @current-change="currentChangeHandle"
-            :current-page="pageIndex"
-            :page-sizes="[10, 20, 50, 100]"
-            :page-size="pageSize"
-            :total="totalPage"
-            layout="total, sizes, prev, pager, next, jumper">
-          </el-pagination>
-        </el-main>
-      </el-container>
+      <el-main style="height: 100%">
+        <PreorderDetail v-if="preordervisable"></PreorderDetail>
+        <div class="table-settings">
+          <el-row>
+            <el-col :span="12">
+              <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
+                        style="width: 280px" @keyup.enter.native="searchItem"></el-input>
+              <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
+            </el-col>
+            <el-col :span="12">
+              <div class="block">
+                <span class="demonstration">日期选择</span>
+                <el-date-picker
+                  v-model="date1"
+                  type="daterange"
+                  align="right"
+                  unlink-panels
+                  value-format="yyyy-MM-dd"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  :picker-options="pickerOptions">
+                </el-date-picker>
+                <el-button type="primary" icon="el-icon-search" @click="dateconfirm">确认日期</el-button>
+                <el-button type="primary" size="small" icon="el-icon-edit" @click="showdetail">修改</el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <el-table v-loading="loading" :data="orders" height="800px" border stripe style="width: 100%;"
+        >
+          <el-table-column prop="orderNum" label="单据编号" width="120">
+          </el-table-column>
+          <el-table-column prop="typeBusiness" label="业务类型">
+          </el-table-column>
+          <el-table-column prop="customerName" label="客户">
+          </el-table-column>
+          <el-table-column prop="customerNum" label="客户编号">
+          </el-table-column>
+          <el-table-column prop="date" label=日期>
+          </el-table-column>
+          <el-table-column prop="postCode" label="邮编">
+          </el-table-column>
+          <el-table-column prop="source" label="source">
+          </el-table-column>
+          <el-table-column prop="stateTime" label="state-time">
+          </el-table-column>
+          <el-table-column prop="totalNum" label="合计数量">
+          </el-table-column>
+          <el-table-column prop="totalAmount" label="合计金额">
+          </el-table-column>
+          <el-table-column prop="totalTaxAmount" label="合计税额">
+          </el-table-column>
+          <el-table-column prop="totalTaxBeforeAmount" label="合计税前金额">
+          </el-table-column>
+          <el-table-column prop="totalWeight" label="合计重量">
+          </el-table-column>
+          <el-table-column prop="receivables" label="应收款">
+          </el-table-column>
+          <el-table-column prop="totalAmountWithTax" label="合计有税商品税前金额">
+          </el-table-column>
+          <el-table-column prop="jobNum" label="工号">
+          </el-table-column>
+        </el-table>
+        <el-pagination
+          @size-change="sizeChangeHandle"
+          @current-change="currentChangeHandle"
+          :current-page="pageIndex"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageSize"
+          :total="totalPage"
+          layout="total, sizes, prev, pager, next, jumper">
+        </el-pagination>
+      </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
+import PreorderDetail from './preorders-detail'
+
 export default {
-  components: {},
+  components: {PreorderDetail},
   props: {},
   data () {
     const listMenu = []
@@ -137,6 +139,7 @@ export default {
       pageSize: 10,
       totalPage: 0,
       loading: false,
+      preordervisable: false,
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -170,6 +173,9 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    showdetail () {
+      this.preordervisable = true
+    },
     requestData (string) {
       this.search = true
       this.cate = ''
@@ -196,7 +202,11 @@ export default {
     dateconfirm () {
       let string = '/preorder/general/info/date'
       console.log(this.date1)
-      this.requestData(string)
+      if (this.date1) {
+        this.requestData(string)
+      } else {
+        this.getDataList()
+      }
       console.log(this.orders)
     },
     searchItem () {
