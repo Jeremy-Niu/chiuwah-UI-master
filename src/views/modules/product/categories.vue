@@ -14,8 +14,8 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
+              <el-dropdown-item >查看</el-dropdown-item>
+              <el-dropdown-item @click.native = "handledialog">新增</el-dropdown-item>
               <el-dropdown-item>删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -35,6 +35,7 @@
             <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
           </div>
           <el-table v-loading="loading" :data="items" max-height="700" height="600" border stripe style="width: 100%;"
+                    @row-dblclick="handledialog"
           >
             <el-table-column prop="itemName" label="名称">
             </el-table-column>
@@ -42,6 +43,7 @@
             </el-table-column>
             <el-table-column prop="itemNum" label="商品编号">
             </el-table-column>
+
           </el-table>
         </el-main>
         <el-pagination
@@ -53,15 +55,17 @@
           :total="totalPage"
           layout="total, sizes, prev, pager, next, jumper">
         </el-pagination>
+        <v-dialog v-if="dialogFormVisible" ref="dialog"></v-dialog>
       </el-container>
-
     </el-container>
   </div>
 </template>
 
 <script>
+import dialog from './product-detail'
+
 export default {
-  components: {},
+  components: {'v-dialog': dialog},
   props: {},
   data () {
     const listMenu = []
@@ -70,6 +74,7 @@ export default {
     const input = ''
     const search = false
     const selectedvalue = ''
+    const dialogFormVisible = false
     const options = [{
       value: 'name',
       label: '按商品名称'
@@ -91,6 +96,7 @@ export default {
       search,
       options,
       selectedvalue,
+      dialogFormVisible,
       value: '',
       pageIndex: 1,
       pageSize: 10,
@@ -101,6 +107,13 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    handledialog () {
+      this.dialogFormVisible = true
+      console.log(this.dialogFormVisible)
+      this.$nextTick(() => {
+        this.$refs.dialog.init()
+      })
+    },
     requestData (string) {
       this.search = true
       this.cate = ''

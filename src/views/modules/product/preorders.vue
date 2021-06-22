@@ -12,9 +12,7 @@
       <!--            </el-dropdown-menu>-->
       <!--          </el-dropdown>-->
       <!--        </el-header>-->
-
       <el-main style="height: 100%">
-        <PreorderDetail v-if="preordervisable"></PreorderDetail>
         <div class="table-settings">
           <el-row>
             <el-col :span="12">
@@ -45,12 +43,15 @@
                   :picker-options="pickerOptions">
                 </el-date-picker>
                 <el-button type="primary" icon="el-icon-search" @click="dateconfirm">确认日期</el-button>
-                <el-button type="primary" size="small" icon="el-icon-edit" @click="showdetail">修改</el-button>
+                <el-button type="primary" size="small" icon="el-icon-edit" @click="$router.push({ name: 'sds' })">修改
+                </el-button>
               </div>
             </el-col>
           </el-row>
         </div>
         <el-table v-loading="loading" :data="orders" height="800px" border stripe style="width: 100%;"
+                  @row-click="getPreoderNum"
+                  @row-dblclick="$router.push({ name: 'sds' })"
         >
           <el-table-column prop="orderNum" label="单据编号" width="120">
           </el-table-column>
@@ -100,7 +101,7 @@
 </template>
 
 <script>
-import PreorderDetail from './preorders-detail'
+import PreorderDetail from './preordersdetail'
 
 export default {
   components: {PreorderDetail},
@@ -112,6 +113,7 @@ export default {
     const input = ''
     const search = false
     const selectedvalue = ''
+    const oredernum = ''
     // const currentdate = new Date()
     const options = [{
       value: 'name',
@@ -134,6 +136,7 @@ export default {
       search,
       options,
       selectedvalue,
+      oredernum,
       value: '',
       pageIndex: 1,
       pageSize: 10,
@@ -173,6 +176,10 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    getPreoderNum (row) {
+      this.oredernum = row.orderNum
+      console.log(this.oredernum)
+    },
     showdetail () {
       this.preordervisable = true
     },
@@ -293,5 +300,5 @@ export default {
 .table-settings {
   padding: 15px;
 }
-
 </style>
+
