@@ -107,11 +107,10 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    handledialog () {
+    handledialog (row) {
       this.dialogFormVisible = true
-      console.log(this.dialogFormVisible)
       this.$nextTick(() => {
-        this.$refs.dialog.init()
+        this.$refs.dialog.init(row)
       })
     },
     requestData (string) {
