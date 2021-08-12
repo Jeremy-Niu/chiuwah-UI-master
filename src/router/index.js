@@ -44,7 +44,7 @@ const mainRoutes = {
     },
     {
       path: '/product-customers-a',
-      component: _import('modules/product/customers'),
+      component: _import('modules/product/preordersdetail'),
       name: 'sds',
       meta: {title: '预订单详细', isTab: true}
     }

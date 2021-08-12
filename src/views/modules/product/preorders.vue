@@ -51,13 +51,13 @@
         </div>
         <el-table v-loading="loading" :data="orders" height="800px" border stripe style="width: 100%;"
                   @row-click="getPreoderNum"
-                  @row-dblclick="$router.push({ name: 'sds' })"
+                  @row-dblclick="$router.push({ name: 'sds', params:{ order: 'sdfcv' }, query:{ordernum: oredernum}})"
         >
           <el-table-column prop="orderNum" label="单据编号" width="120">
           </el-table-column>
           <el-table-column prop="typeBusiness" label="业务类型">
           </el-table-column>
-          <el-table-column prop="customerName" label="客户">
+          <el-table-column prop="customer.customerName" label="客户">
           </el-table-column>
           <el-table-column prop="customerNum" label="客户编号">
           </el-table-column>
@@ -178,7 +178,7 @@ export default {
   methods: {
     getPreoderNum (row) {
       this.oredernum = row.orderNum
-      console.log(this.oredernum)
+      // console.log(this.oredernum)
     },
     showdetail () {
       this.preordervisable = true

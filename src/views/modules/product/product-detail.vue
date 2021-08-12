@@ -3,33 +3,29 @@
     title="商品详细"
     :close-on-click-modal="false"
     :visible.sync="visible"
-    :append-to-body="true">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             align="left"
-             label-width="120px">
-      <!--      <el-form-item size="mini" label="存储类型">-->
-      <!--        <el-radio-group v-model="dataForm.type">-->
-      <!--        </el-radio-group>-->
-      <!--      </el-form-item>-->
+    :append-to-body="true"
+    width="60%"
+    >
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()">
       <div>
         <el-row>
           <el-col :span="24">
         <el-form-item>
           <el-form-item label="商品编号" prop="" align="left">
-            <el-input :placeholder="itemNum" v-model="input_itemNum" clearable :style="{width: '100%'}" :disabled="enablemodify">
+            <el-input :placeholder="itemNum" v-model="input_itemNum" clearable :style="{width: '20%'}">
             </el-input>
           </el-form-item>
         </el-form-item>
           </el-col>
         <el-form-item>
-          <el-form-item label="条形码" prop="field102" align="left">
-            <el-input autosize :placeholder="barCode" clearable :style="{width: '100%'}" :disabled="enablemodify">
+          <el-form-item label="条形码" prop="" align="left">
+            <el-input autosize :placeholder="barCode" clearable :style="{width: '20%'}" :disabled="enablemodify">
             </el-input>
           </el-form-item>
         </el-form-item>
         <el-form-item>
-          <el-form-item label="商品名称" prop="field103" align="left">
-            <el-input :placeholder="itemName" clearable :style="{width: '100%'}" :disabled="enablemodify">
+          <el-form-item label="商品名称" prop="" align="left">
+            <el-input :placeholder="itemName" clearable :style="{width: '20vh'}" :disabled="enablemodify">
             </el-input>
           </el-form-item>
         </el-form-item>
@@ -37,10 +33,13 @@
       </div>
       <el-form-item>
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="用户管理" name="first">商品图片</el-tab-pane>
-          <el-tab-pane label="配置管理" name="second">历史价格</el-tab-pane>
-          <el-tab-pane label="角色管理" name="third">供应商信息</el-tab-pane>
-          <el-tab-pane label="定时任务补偿" name="fourth">库存信息</el-tab-pane>
+          <el-tab-pane label="库存资料" name="first">
+            <productdetailtab>
+            </productdetailtab>
+          </el-tab-pane>
+          <el-tab-pane label="购买记录" name="second">购买记录</el-tab-pane>
+          <el-tab-pane label="供应商信息" name="third">供应商信息</el-tab-pane>
+          <el-tab-pane label="库存信息" name="fourth">库存信息</el-tab-pane>
         </el-tabs>
       </el-form-item>
       <el-form>
@@ -55,6 +54,7 @@
 </template>
 
 <script>
+import productdetailtab from './product-detail-tab.vue'
 export default {
   data () {
     return {
@@ -74,7 +74,7 @@ export default {
       console.log(row)
       this.itemNum = row.itemNum
       this.itemName = row.itemName
-      this.barCode = row.barcode
+      this.barCode = row.barCode
     },
     // 表单提交
     dataFormSubmit () {
@@ -101,6 +101,9 @@ export default {
         }
       })
     }
+  },
+  components: {
+    productdetailtab
   }
 }
 </script>

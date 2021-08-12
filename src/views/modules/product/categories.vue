@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-container style="height:800px; border: 1px solid #eee">
-      <el-aside width="250px" style="background-color: rgb(238, 241, 246)">
-        <el-table ref="menuTable" highlight-current-row :data="listMenu" stripe style="width: 100%"
+      <el-aside style="background-color: rgb(238, 241, 246); width:18%">
+        <el-table ref="menuTable" highlight-current-row :data="listMenu" stripe style=""
                   @row-dblclick="getDataList"
                   @row-click="getSelectType">
-          <el-table-column ref="aside-header" prop="category" label="类型" width="220" align="left"></el-table-column>
+          <el-table-column ref="aside-header" prop="category" label="类型" style="width: 100%"></el-table-column>
         </el-table>
       </el-aside>
       <el-container>
@@ -14,38 +14,56 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item >查看</el-dropdown-item>
-              <el-dropdown-item @click.native = "handledialog">新增</el-dropdown-item>
+              <el-dropdown-item>查看</el-dropdown-item>
+              <el-dropdown-item @click.native="handledialog">新增</el-dropdown-item>
               <el-dropdown-item>删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-header>
-        <el-main>
-          <div class="table-settings">
-            <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
-                      style="width: 300px" @keyup.enter.native="searchItem"></el-input>
-            <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
-          </div>
-          <el-table v-loading="loading" :data="items" max-height="700" height="600" border stripe style="width: 100%;"
-                    @row-dblclick="handledialog"
-          >
-            <el-table-column prop="itemName" label="名称">
-            </el-table-column>
-            <el-table-column prop="barcode" label="条形码" width="120">
-            </el-table-column>
-            <el-table-column prop="itemNum" label="商品编号">
-            </el-table-column>
-
-          </el-table>
-        </el-main>
+        <div class="table-settings">
+          <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input" align="left"
+                    style="width: 20%" @keyup.enter.native="searchItem"></el-input>
+          <el-select v-model="selectedvalue" @change="searchItem($event)" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-button type="primary" icon="el-icon-search" @click="searchItem">搜索</el-button>
+        </div>
+        <el-table v-loading="loading" :data="items" height="100%" border stripe style="width: 100%;"
+                  @row-dblclick="handledialog">
+          <el-table-column prop="itemName" label="名称">
+          </el-table-column>
+          <el-table-column prop="barcode" label="条形码" width="120">
+          </el-table-column>
+          <el-table-column prop="itemNum" label="商品编号">
+          </el-table-column>
+          <el-table-column prop="unit" label="单位">
+          </el-table-column>
+          <el-table-column prop="retailPrice" label="零售价">
+          </el-table-column>
+          <el-table-column prop="memberPrice" label="会员价">
+          </el-table-column>
+          <el-table-column prop="wholesalePrice1" label="批发价1">
+          </el-table-column>
+          <el-table-column prop="wholesalePrice2" label="批发价2">
+          </el-table-column>
+          <el-table-column prop="wholesalePrice3" label="批发价3">
+          </el-table-column>
+          <el-table-column prop="purchasePrice" label="进货价">
+          </el-table-column>
+          <el-table-column prop="lastPurchasePrice" label="最后进货价">
+          </el-table-column>
+          <el-table-column prop="number" label="数量">
+          </el-table-column>
+          <el-table-column prop="lastChangedTime" label="最后变更时间">
+          </el-table-column>
+          <el-table-column prop="lastSaleTime" label="最后销售时间">
+          </el-table-column>
+        </el-table>
         <el-pagination
           @size-change="sizeChangeHandle"
           @current-change="currentChangeHandle"
@@ -158,7 +176,7 @@ export default {
     },
     getDataList (row, column, cell, event) {
       this.input = ''
-      this.search = false
+      this.search = true
       this.$http({
         url: this.$http.adornUrl('/product/listbytype/' + this.cate),
         method: 'get',
